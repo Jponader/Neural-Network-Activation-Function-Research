@@ -1,5 +1,6 @@
 
 function runEnv {
+	echo "Running Enviroment"
 	source env/bin/activate
 }
 
@@ -18,12 +19,24 @@ function checkDependencies {
 
 function runTest {
 	runEnv
-	echo "testing"
+	echo "testing: Not Really Part to be Implemented"
 }
 
 function updateEnv {
 	runEnv
 	pip freeze > requirements.txt
+}
+
+function run() {
+	runEnv
+	if [ -z $1 ] 
+		then 
+			echo "Please Include Python file to Run"
+			echo "./operations.sh --runPY <file>.py"
+		else
+			echo "Running" $1
+			python3 $1
+	fi
 }
 
 case "$1" in
@@ -42,5 +55,9 @@ case "$1" in
 	"--checkupdate")
 		checkDependencies
 		;;
+
+	"--runPY")
+		shift
+		run $1
 
 esac
