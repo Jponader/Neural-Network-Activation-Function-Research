@@ -14,6 +14,7 @@ function setupEnv {
 
 function checkDependencies {
 	runEnv
+	pip install --upgrade pip
 	pip install -r requirements.txt
 }
 
@@ -48,11 +49,11 @@ case "$1" in
 		runTest
 		;;
 
-	"--update")
+	"--Requpdate")
 		updateEnv
 		;;
 
-	"--checkupdate")
+	"--update")
 		checkDependencies
 		;;
 
