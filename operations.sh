@@ -4,18 +4,53 @@ function runEnv {
 	source env/bin/activate
 }
 
+function install {
+	echo "Python3 Virtual Enviroment needs to be installed"
+	read -p "Would you like us to install it??  Y or N" -n 1 -r
+	echo '\n'
+	if [[ ! $REPLY =~ ^[Yy]$ ]]
+	then
+	    exit 1
+	fi
+}
+
+function installPython {
+	echo "Please Install Python3 onto the System to proceed"
+	ech0 "Linux: apt install python3"
+
+	exit 1
+}
+
+function installPip {
+	echo "Please Install Pip3 onto the System to proceed"
+	ech0 "Linux: apt install pip3"
+
+	exit 1
+}
+
+function checkEnviromnet {
+	echo "Checking System"
+	type python3 &>/dev/null || installPython
+	type pip3 &>/dev/null || installPip
+	type virtualenv &>/dev/null || installCheck "virtualenv"
+	type virtualenv &>/dev/null || pip3 install virtualenv
+	echo "Sytem Check Complete, System ready to go"
+	echo ""
+	echo "To Setup Enviroment"
+	echo "	./openML.sh --setupEnv"
+}
+
 
 function setupEnv {
-	type virtualenv &>/dev/null || sudo pip install virtualenv
-	virtualenv --version
+	checkEnviromnet
 	python3 -m venv env
 	checkDependencies
 }
 
 function checkDependencies {
 	runEnv
-	pip install --upgrade pip
-	pip install -r requirements.txt
+	pip3 install --upgrade pip
+	pip3 install -r requirements.txt
 }
 
 function runTest {
@@ -25,7 +60,7 @@ function runTest {
 
 function updateEnv {
 	runEnv
-	pip freeze > requirements.txt
+	pip3 freeze > requirements.txt
 }
 
 function run() {
@@ -41,6 +76,11 @@ function run() {
 }
 
 case "$1" in
+
+	"--check")
+		checkEnviromnet
+		;;
+
 	"--setupEnv")
 		setupEnv
 		;;
@@ -60,5 +100,10 @@ case "$1" in
 	"--runPY")
 		shift
 		run $1
+		;;
+
+	"")
+		echo "To test enviroment:"
+		echo "	operations.sh --check"
 
 esac

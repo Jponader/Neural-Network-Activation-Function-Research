@@ -38,7 +38,7 @@ model.compile(optimizer='adam',
 							metrics=['accuracy'])
 
 #model.save_weights('networks/FashionMNST/unTrainedweights.h5')
-model.load_weights('networks/FashionMNST/unTrainedweights.h5')
+#model.load_weights('networks/FashionMNST/unTrainedweights.h5')
 
 
 model.fit(train_images, train_labels, epochs=5)
