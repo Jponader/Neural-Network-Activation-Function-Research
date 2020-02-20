@@ -15,7 +15,7 @@ Runs testing script.
 
 ### --runPY
 Runs a specific python function in the virtual enviroment.
-./operations.sh --runPY <file>.py
+./operations.sh --runPY file.py
 
 ### --update
 Updates the enviroment based on the requirements.txt file
