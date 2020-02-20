@@ -55,7 +55,7 @@ function checkDependencies {
 
 function runTest {
 	runEnv
-	echo "testing: Not Really Part to be Implemented"
+	python3 tester.py
 }
 
 function updateEnv {
