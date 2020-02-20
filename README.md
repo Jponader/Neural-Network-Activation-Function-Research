@@ -11,7 +11,7 @@ Check the computer for python3, pip3 and python 3 virtual enviroment.
 Created Virtual Enviroment for running tensorflow and updates all of the dependicies to the proper state.
 
 ### --runTest
-Will run the test in the future for the experiment. Currently just a place holder.
+Runs testing script.
 
 ### --runPY
 Runs a specific python function in the virtual enviroment.
