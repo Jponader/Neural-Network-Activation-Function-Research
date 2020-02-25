@@ -18,17 +18,17 @@ class FashionMNIST():
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 5
+			'epoch' : 5,
+			'batch' : 32
 		}
 
 		
 	def getDataSet(self):
 		fashion_mnist = keras.datasets.fashion_mnist
-		(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
-		train_images = train_images / 255.0
-		test_images = test_images / 255.0
-
-		return ((train_images, train_labels), (test_images, test_labels))
+		(xTrain,yTrain),(xTest, yTest) = fashion_mnist.load_data()
+		xTrain = xTrain / 255.0
+		xTest = xTest / 255.0
+		return ((xTrain,yTrain),(xTest, yTest))
 
 	def buildModel(self, activationFucntion = tf.nn.relu):
 		inputs = keras.Input(shape=(28,28))
@@ -49,3 +49,21 @@ class FashionMNIST():
 		return model
 
 
+# DEVELOPMENT TESTING
+
+def main():
+	# Change this line based on Network File
+	net = FashionMNIST()
+
+	config = net.getConfig()
+	((xTrain,yTrain),(xTest, yTest)) = net.getDataSet()
+	model = net.buildModel()
+	model = net.compile(model)
+	model.fit(xTrain, yTrain, epochs= 1, batch_size = config['batch'])
+		
+	test_loss, test_acc = model.evaluate(xTest, yTest)
+	print('Test accuracy:', test_acc)
+	model.summary()
+
+if __name__ == '__main__':
+    main()
