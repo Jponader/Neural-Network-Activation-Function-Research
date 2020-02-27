@@ -75,6 +75,18 @@ function run() {
 	fi
 }
 
+function board(){
+	runEnv
+	if [ -z $1 ] 
+		then 
+			echo "Please Include Python file to Run"
+			echo "./operations.sh --tensorboard <log File Dir>"
+		else
+			tensorboard --logdir $1
+	fi
+	
+}
+
 case "$1" in
 
 	"--check")
@@ -100,6 +112,11 @@ case "$1" in
 	"--runPY")
 		shift
 		run $1
+		;;
+
+	"--tensorboard")
+		shift
+		board $1
 		;;
 
 	"")
