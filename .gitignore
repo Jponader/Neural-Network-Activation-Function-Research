@@ -1,5 +1,6 @@
 /env
 .DS_Store
 __pycache__
-*/*/training
-*/*/logs
+networks/*/training
+networks/*/logs
+networks/*/unTrainedweights.h5
