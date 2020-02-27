@@ -13,6 +13,10 @@ Created Virtual Enviroment for running tensorflow and updates all of the dependi
 ### --runTest
 Runs testing script.
 
+### --tensorboard
+Starts the tensorbard console with the file directory specified.
+./operations.sh --tensorboard <log File Dir>
+
 ### --runPY
 Runs a specific python function in the virtual enviroment.
 ./operations.sh --runPY file.py
