@@ -9,7 +9,8 @@ import os
 
 class FashionMNIST():
 
-	PATH = 'networks/FashionMNIST/'
+	PATH = os.path.join('networks','FashionMNIST')
+
 
 	def __init__(self):
 		model = self.buildModel()
@@ -42,9 +43,9 @@ class FashionMNIST():
 		model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
 		if start:
-			model.save_weights(self.PATH + 'unTrainedweights.h5')
+			model.save_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 		else:
-			model.load_weights(self.PATH + 'unTrainedweights.h5')
+			model.load_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 
 		return model
 

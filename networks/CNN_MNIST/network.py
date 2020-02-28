@@ -9,7 +9,7 @@ import os
 
 class CNN_MNIST():
 
-	PATH = 'networks/CNN_MNIST/'
+	PATH = os.path.join('networks','CNN_MNIST')
 
 	def __init__(self):
 		model = self.buildModel()
@@ -54,9 +54,9 @@ class CNN_MNIST():
 		model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
 		if start:
-			model.save_weights(self.PATH + 'unTrainedweights.h5')
+			model.save_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 		else:
-			model.load_weights(self.PATH + 'unTrainedweights.h5')
+			model.load_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 
 		return model
 

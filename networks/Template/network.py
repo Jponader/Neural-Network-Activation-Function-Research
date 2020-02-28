@@ -9,7 +9,7 @@ import os
 
 class template():
 
-	PATH = 'networks/template/'
+	PATH = os.path.join('networks','template')
 
 	def __init__(self):
 		model = self.buildModel()
@@ -38,10 +38,9 @@ class template():
 		model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
 		if start:
-			model.save_weights(self.PATH + 'unTrainedweights.h5')
+			model.save_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 		else:
-			model.load_weights(self.PATH + 'unTrainedweights.h5')
-
+			model.load_weights( os.path.join(self.PATH,'unTrainedweights.h5'))
 		return model
 
 
