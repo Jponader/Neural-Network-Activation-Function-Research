@@ -14,13 +14,13 @@ class CIFAR():
 	def __init__(self):
 		model = self.buildModel()
 		model = self.compile(model, start = True)
-		pass
+		del model
 
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 5,
-			'batch' : 128
+			'epoch' : 12,
+			'batch' : 256
 		}
 
 		
@@ -35,16 +35,12 @@ class CIFAR():
 
 	def buildModel(self, activationFucntion = tf.nn.relu):
 		inputs = keras.Input(shape=(32,32,3))
-		x = keras.layers.Conv2D(64, kernel_size=(1, 1),activation=activationFucntion)(inputs)
-		x = keras.layers.Conv2D(64, kernel_size=(1, 1), activation=activationFucntion)(x)
-		x = keras.layers.MaxPooling2D(pool_size=(2, 2))(x)
-		x = keras.layers.Conv2D(128, kernel_size=(1, 1),activation=activationFucntion)(x)
-		x = keras.layers.Conv2D(128, kernel_size=(1, 1), activation=activationFucntion)(x)
-		x = keras.layers.MaxPooling2D(pool_size=(2, 2))(x)
-		x = keras.layers.Conv2D(256, kernel_size=(1, 1),activation=activationFucntion)(x)
-		x = keras.layers.Conv2D(256, kernel_size=(1, 1), activation=activationFucntion)(x)
-		x = keras.layers.Conv2D(256, kernel_size=(1, 1), activation=activationFucntion)(x)
-		x = keras.layers.MaxPooling2D(pool_size=(2, 2))(x)
+		x = keras.layers.Conv2D(64, kernel_size=(3, 3),activation=activationFucntion)(inputs)
+		x = keras.layers.MaxPooling2D((2,2))(x)
+		x = keras.layers.Conv2D(128, kernel_size=(3, 3),activation=activationFucntion)(x)
+		x = keras.layers.MaxPooling2D((2,2))(x)
+		x = keras.layers.Conv2D(128, kernel_size=(3, 3), activation=activationFucntion)(x)
+		x = keras.layers.MaxPooling2D((2,2))(x)
 		x = keras.layers.Flatten()(x)
 		x = keras.layers.Dense(256, activation=activationFucntion)(x)
 		output = keras.layers.Dense(10, activation='softmax')(x)

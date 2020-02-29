@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 from datetime import datetime
+from tensorflow.keras.activations import relu, sigmoid, tanh, linear, elu, exponential, hard_sigmoid, softplus, softsign
 import h5py
 import time
 import sys
@@ -10,52 +11,32 @@ from networks import *
 
 assert tf.test.is_built_with_cuda(), "Cudo Not Working"
 assert tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None), "Not Using GPU"
+# SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\extras\CUPTI\lib64;%PATH%
+
 
 networks = [FashionMNIST, CNN_MNIST, CIFAR]
 
 #Speed Test
-#networks = [FashionMNIST]
+#networks = [CIFAR]
 
-activationfunctions = [tf.nn.relu]
+activationfunctions = [relu, sigmoid, tanh, linear, elu, exponential]
 
-for network in networks:
-	net = network()
-	config = net.getConfig()
-	((xTrain,yTrain),(xTest, yTest)) = net.getDataSet()
+for runs in range(5):
+	for network in networks:
+		net = network()
+		config = net.getConfig()
+		((xTrain,yTrain),(xTest, yTest)) = net.getDataSet()
 
-	for func in activationfunctions:
-		model = net.buildModel(activationFucntion = func)
-		model = net.compile(model)
+		for func in activationfunctions:
+			model = net.buildModel(activationFucntion = func)
+			model = net.compile(model)
 
-		#local train, get checkpoints and stats
+			log_dir = os.path.join(config['path'],"logs",func.__name__ , str(runs))
+			tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
 
+			model.fit(xTrain, yTrain, epochs= config['epoch'], batch_size = config['batch'],validation_data =(xTest, yTest), callbacks = [tensorboard_callback], use_multiprocessing=True)
 
-		checkpoint_path = os.path.join(config['path'], "training", func.__name__)
-		checkpoint_dir = os.path.dirname(checkpoint_path + "/cp-{epoch:04d}.ckpt")
-		cp_callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_path, save_weights_only=True)
+			#Speed Train for Testin
+			#model.fit(xTrain, yTrain, epochs= 5, batch_size = config['batch'],validation_data =(xTest, yTest), callbacks = [cp_callback, tensorboard_callback])
 
-		#log_dir = config['path'] +"logs\\" + func.__name__ +"\\" + datetime.now().strftime("%Y%m%d-%H%M%S")
-		log_dir = os.path.join(config['path'],"logs",func.__name__ , datetime.now().strftime("%Y%m%d-%H%M%S"))
-		tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
-
-
-
-
-
-		model.fit(xTrain, yTrain, epochs= config['epoch'], batch_size = config['batch'],validation_data =(xTest, yTest), callbacks = [cp_callback, tensorboard_callback])
-
-		#Speed Train for Testin
-		#model.fit(xTrain, yTrain, epochs= 5, batch_size = config['batch'],validation_data =(xTest, yTest), callbacks = [cp_callback, tensorboard_callback])
-
-		#test_loss, test_acc = model.evaluate(xTest, yTest)
-
-		#print('Test accuracy:', test_acc)
-		#model.summary()
-
-
-
-
-		#measure accrucy
-
-		#plot data
-		#save data
+			del model

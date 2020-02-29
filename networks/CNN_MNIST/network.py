@@ -14,11 +14,12 @@ class CNN_MNIST():
 	def __init__(self):
 		model = self.buildModel()
 		model = self.compile(model, start = True)
+		del model
 
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 5,
+			'epoch' : 10,
 			'batch' : 128
 		}
 
@@ -39,9 +40,7 @@ class CNN_MNIST():
 		inputs = keras.Input(shape=(28,28,1))
 		x = keras.layers.Conv2D(32, kernel_size=(3, 3),activation=activationFucntion)(inputs)
 		x = keras.layers.Conv2D(32, kernel_size=(3, 3), activation=activationFucntion)(x)
-		x = keras.layers.MaxPooling2D(pool_size=(2, 2))(x)
 		x = keras.layers.Conv2D(64, kernel_size=(3, 3),activation=activationFucntion)(x)
-		x = keras.layers.Conv2D(64, kernel_size=(3, 3), activation=activationFucntion)(x)
 		x = keras.layers.Flatten()(x)
 		x = keras.layers.Dense(256, activation=activationFucntion)(x)
 		output = keras.layers.Dense(10, activation='softmax')(x)

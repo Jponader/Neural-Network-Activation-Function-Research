@@ -15,6 +15,7 @@ class FashionMNIST():
 	def __init__(self):
 		model = self.buildModel()
 		model = self.compile(model,start = True)
+		del model
 
 	def getConfig(self):
 		return {
@@ -27,15 +28,17 @@ class FashionMNIST():
 	def getDataSet(self):
 		fashion_mnist = keras.datasets.fashion_mnist
 		(xTrain,yTrain),(xTest, yTest) = fashion_mnist.load_data()
+		xTrain = xTrain.reshape(xTrain.shape[0], 28, 28, 1)
+		xTest = xTest.reshape(xTest.shape[0], 28, 28, 1)
 		xTrain = xTrain / 255.0
 		xTest = xTest / 255.0
 		return ((xTrain,yTrain),(xTest, yTest))
 
 	def buildModel(self, activationFucntion = tf.nn.relu):
-		inputs = keras.Input(shape=(28,28))
-		x = keras.layers.Flatten()(inputs)
-		y = keras.layers.Dense(128, activation=activationFucntion)(x)
-		output = keras.layers.Dense(10, activation=tf.nn.softmax)(y)
+		inputs = keras.Input(shape=(28,28,1))
+		x = keras.layers.Conv2D(32, kernel_size=(3, 3),activation=activationFucntion)(inputs)
+		x = keras.layers.Flatten()(x)
+		output = keras.layers.Dense(10, activation=tf.nn.softmax)(x)
 		model = keras.Model(inputs=inputs, outputs=output)
 		return model
 
