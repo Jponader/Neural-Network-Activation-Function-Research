@@ -16,7 +16,7 @@ function install {
 function installPython {
 	echo "Please Install Python3 onto the System to proceed"
 	echo "Python 3.7 is Recomended"
-	ech0 "Linux: apt install python3"
+	echo "Linux: apt install python3"
 
 	exit 1
 }
