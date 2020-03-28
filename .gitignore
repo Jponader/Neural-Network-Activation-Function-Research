@@ -3,3 +3,4 @@
 __pycache__
 networks/*/training
 networks/*/unTrainedweights.h5
+*/*/logs
