@@ -14,8 +14,8 @@ if os.path.exists("Results.txt"):
 
 f = open("Results.txt", "a")
 
-#assert tf.test.is_built_with_cuda(), "Cudo Not Working"
-#assert tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None), "Not Using GPU"
+assert tf.test.is_built_with_cuda(), "Cudo Not Working"
+assert tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None), "Not Using GPU"
 # SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\extras\CUPTI\lib64;%PATH%
 
 
@@ -28,7 +28,7 @@ activationfunctions = [relu, sigmoid, tanh, linear, elu, exponential]
 
 #activationfunctions = [relu]
 
-for runs in range(2):
+for runs in range(5):
 	for network in networks:
 		net = network()
 		config = net.getConfig()
@@ -41,7 +41,7 @@ for runs in range(2):
 			log_dir = os.path.join(config['path'],"logs",func.__name__ , str(runs))
 			tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
 
-			history = model.fit(xTrain, yTrain, epochs= config['epoch'], batch_size = config['batch'],validation_data =(xTest, yTest), callbacks = [tensorboard_callback], use_multiprocessing=True)
+			history = model.fit(xTrain, yTrain, epochs= config['epoch'], batch_size = config['batch'],validation_data =(xTest, yTest), use_multiprocessing=True)
 
 			for keys in history.history.keys():
 				f.write(str(network.__name__) +','+ str(func.__name__) +','+ str(runs) + ',' + keys)
