@@ -19,7 +19,7 @@ class CNN_MNIST():
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 10,
+			'epoch' : 15,
 			'batch' : 128
 		}
 

@@ -20,7 +20,7 @@ class FashionMNIST():
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 5,
+			'epoch' : 10,
 			'batch' : 32
 		}
 
