@@ -19,7 +19,7 @@ assert tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=Non
 # SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\extras\CUPTI\lib64;%PATH%
 
 
-networks = [FashionMNIST, CNN_MNIST, CIFAR]
+networks = [CIFAR_100, FashionMNIST, CNN_MNIST, CIFAR]
 
 #Speed Test
 #networks = [FashionMNIST]

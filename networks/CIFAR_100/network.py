@@ -43,6 +43,7 @@ class CIFAR_100():
 		x = keras.layers.MaxPooling2D((2,2))(x)
 		x = keras.layers.Flatten()(x)
 		x = keras.layers.Dense(256, activation=activationFucntion)(x)
+		x = keras.layers.Dense(128, activation=activationFucntion)(x)
 		output = keras.layers.Dense(100, activation='softmax')(x)
 		model = keras.Model(inputs=inputs, outputs=output)
 
