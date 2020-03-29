@@ -19,7 +19,7 @@ class CIFAR_100():
 	def getConfig(self):
 		return {
 			'path' : self.PATH,
-			'epoch' : 30,
+			'epoch' : 70,
 			'batch' : 128
 		}
 
